@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MosteffectedCountry extends StatelessWidget {
-  final List countryDate;
+  final List countryData;
 
-  const MosteffectedCountry({Key key, this.countryDate}) : super(key: key);
+  const MosteffectedCountry({Key key, this.countryData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,32 +14,30 @@ class MosteffectedCountry extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (context, index) {
           return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
               children: <Widget>[
                 Image.network(
-                  countryDate[index]["countryInfo"]["flag"],
-                  height: 30,
+                  countryData[index]["countryInfo"]["flag"],
+                  height: 25,
                 ),
                 SizedBox(
-                  height: 10,
+                  width: 10,
                 ),
                 Text(
-                  countryDate[index]["country"],
+                  countryData[index]["country"],
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 10,
+                  width: 10,
                 ),
                 Text(
-                  'Deaths:' + countryDate[index]["totolDeaths"],
+                  'Deaths:${countryData[index]["deaths"]}',
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                )
               ],
             ),
           );

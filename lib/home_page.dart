@@ -1,4 +1,6 @@
 import 'package:covid19/data_source.dart';
+import 'package:covid19/pages/countryPagesData.dart';
+import 'package:covid19/panels/infoPanel.dart';
 import 'package:covid19/panels/mostEffectedCountry.dart';
 import 'package:covid19/panels/worldwidepanel.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,6 @@ class _HomePageState extends State<HomePage> {
     http.Response response = await http.get(urls);
     setState(() {
       countrydata = json.decode(response.body);
-      print(countrydata);
     });
   }
 
@@ -64,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -76,11 +77,19 @@ class _HomePageState extends State<HomePage> {
                           color: primaryBlack,
                           borderRadius: BorderRadius.circular(15)),
                       padding: const EdgeInsets.all(10.0),
-                      child: Text('Regional',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white))),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CountryPage()));
+                        },
+                        child: Text('Regional',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
+                      )),
                 ],
               ),
             ),
@@ -92,15 +101,35 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-              child: Text('Most Affected Country',
+              child: Text('Recent Affected Country',
                   style:
                       TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
             ),
+            SizedBox(
+              height: 5,
+            ),
             countrydata == null
-                ? Container()
+                ? Container(
+                    child: CircularProgressIndicator(),
+                  )
                 : MosteffectedCountry(
-                    countryDate: countrydata,
+                    countryData: countrydata,
                   ),
+            SizedBox(
+              height: 30,
+            ),
+            InfoPanel(),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+                child: Text(
+              "WE ARE TOGETHER IN FIGHT",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            )),
+            SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),
